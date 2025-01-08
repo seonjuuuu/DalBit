@@ -1,10 +1,10 @@
-import Image from "next/image";
+import Nav from "@/components/Nav";
 import styles from "./page.module.scss";
 
 export default function Home() {
   return (
     <div className={styles.container}>
-      setting
+      <Nav />
     </div>
   );
 }
