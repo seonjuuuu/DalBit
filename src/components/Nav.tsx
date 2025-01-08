@@ -4,7 +4,7 @@ const Nav = () => {
   return (
     <nav className={styles.nav}>
       <img className={styles.logo} src="/dalbit-kr.png" alt="logo" />
-      <ul>
+      <ul className={styles.navList}>
         <li>홍콩관광청</li>
       </ul>
     </nav>
