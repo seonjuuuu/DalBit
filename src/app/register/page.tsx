@@ -1,13 +1,13 @@
-import Login from "@/components/Login";
+import Register from "@/components/Register";
 import styles from "./page.module.scss";
 import AuthPageLayout from "@/components/common/AuthPageLayout";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   return (
     <AuthPageLayout>
-      <Login />
+      <Register />
     </AuthPageLayout>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
