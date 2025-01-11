@@ -190,9 +190,6 @@ button {
   margin-top: 30px;
   text-align: center;
   border-collapse: collapse;
-  thead {
-    background-color: rgba(#f7be1d, 0.4);
-  }
   th,
   td {
     padding: 20px;
@@ -200,5 +197,6 @@ button {
   }
   th {
     font-weight: 700;
+    background-color: #fffbef;
   }
 }

@@ -1,0 +1,15 @@
+.tableWrapper {
+  margin-bottom: 150px;
+  th {
+    width: 300px;
+  }
+  td {
+    display: flex;
+    gap: 15px;
+    text-align: left;
+
+    input {
+      margin-right: 10px;
+    }
+  }
+}
