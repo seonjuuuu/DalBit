@@ -184,3 +184,18 @@ button {
   color: #000000;
   background-color: #f7be1d;
 }
+
+.tableList {
+  width: 100%;
+  margin-top: 50px;
+  text-align: center;
+  border-collapse: collapse;
+  thead {
+    background-color: rgba(#f7be1d, 0.4);
+  }
+  th,
+  td {
+    padding: 20px;
+    border: 1px solid rgb(177, 177, 177);
+  }
+}
