@@ -3,8 +3,8 @@ import { useState } from "react";
 import styles from "./HongKongSearch.module.scss";
 
 const HongKongSearch = () => {
-  const [settlement, setSettlement] = useState("settled");
-  const [category, setCategory] = useState("category1");
+  const [settlement, setSettlement] = useState("total");
+  const [category, setCategory] = useState("total");
 
   return (
     <div className={styles.tableWrapper}>
@@ -17,11 +17,11 @@ const HongKongSearch = () => {
                 <input
                   type="radio"
                   name="category"
-                  value="category1"
-                  checked={category === "category1"}
-                  onChange={() => setCategory("category1")}
+                  value="total"
+                  checked={category === "total"}
+                  onChange={() => setCategory("total")}
                 />
-                Category 1
+                전체
               </label>
               <label>
                 <input
@@ -33,11 +33,31 @@ const HongKongSearch = () => {
                 />
                 Category 2
               </label>
+              <label>
+                <input
+                  type="radio"
+                  name="category"
+                  value="category3"
+                  checked={category === "category3"}
+                  onChange={() => setCategory("category3")}
+                />
+                Category 3
+              </label>
             </td>
           </tr>
           <tr>
             <th>정산여부</th>
             <td>
+              <label>
+                <input
+                  type="radio"
+                  name="settlement"
+                  value="total"
+                  checked={settlement === "total"}
+                  onChange={() => setSettlement("total")}
+                />
+                전체
+              </label>
               <label>
                 <input
                   type="radio"
@@ -62,6 +82,9 @@ const HongKongSearch = () => {
           </tr>
         </tbody>
       </table>
+      <div className={styles.button}>
+        <button className={styles.btnSearch}>검색하기</button>
+      </div>
     </div>
   );
 };
