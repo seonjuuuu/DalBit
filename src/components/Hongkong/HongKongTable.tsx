@@ -1,13 +1,17 @@
 "use client";
+import ToggleButton from "../common/ToggleButton";
 import styles from "./HongKongTable.module.scss";
+import Switch from "react-switch";
 
 const HongKongTable = () => {
   return (
     <div className={styles.mainTable}>
       <div className={styles.cost}>
         <div className={styles.total}> 총 금액 : 10,000원</div>
-        <div className={styles.settledAmount}> 정산 금액 : 5,000원</div>
-        <div className={styles.pendingAmount}> 미정산금액 : 5,000원</div>
+        <div className={styles.amount}>
+          <div className={styles.settledAmount}> 정산 금액 : 5,000원</div>
+          <div className={styles.pendingAmount}> 미정산금액 : 5,000원</div>
+        </div>
       </div>
       <table className="tableList">
         <thead>
@@ -25,7 +29,18 @@ const HongKongTable = () => {
             <td>번역작업</td>
             <td>번역</td>
             <td>500,000</td>
-            <td>Y</td>
+            <td>
+              <ToggleButton />
+            </td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>번역작업</td>
+            <td>번역</td>
+            <td>500,000</td>
+            <td>
+              <ToggleButton />
+            </td>
           </tr>
         </tbody>
       </table>

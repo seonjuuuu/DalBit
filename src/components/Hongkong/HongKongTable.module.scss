@@ -1,0 +1,22 @@
+.cost {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 18px;
+  padding: 0 20px;
+}
+
+.total {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.amount {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 18px;
+}
