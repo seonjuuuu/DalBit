@@ -5,7 +5,9 @@ import styles from "./HongKongTable.module.scss";
 
 const HongKongTable = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
-  const [checkedItems, setCheckedItems] = useState<boolean[]>([]);
+  const [checkedItems, setCheckedItems] = useState<boolean[]>(
+    new Array(2).fill(false)
+  );
 
   const data = [
     {
