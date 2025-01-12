@@ -201,3 +201,11 @@ button {
     background-color: #fffbef;
   }
 }
+
+.main {
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  max-width: 1440px;
+  height: calc(100vh - 100px);
+}

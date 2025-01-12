@@ -23,7 +23,7 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         {!shouldHideNav && <Nav />}
-        {children}
+        <main className="main">{children}</main>
       </body>
     </html>
   );
