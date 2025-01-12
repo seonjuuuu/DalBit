@@ -39,21 +39,21 @@ const HongKongSearch = () => {
               <input
                 type="radio"
                 name="category"
-                value="category2"
-                checked={category === "category2"}
-                onChange={() => setCategory("category2")}
+                value="translate"
+                checked={category === "translate"}
+                onChange={() => setCategory("translate")}
               />
-              Category 2
+              번역
             </label>
             <label>
               <input
                 type="radio"
                 name="category"
-                value="category3"
-                checked={category === "category3"}
-                onChange={() => setCategory("category3")}
+                value="homepage"
+                checked={category === "homepage"}
+                onChange={() => setCategory("homepage")}
               />
-              Category 3
+              홈페이지
             </label>
           </Horizontal>
 
@@ -89,6 +89,12 @@ const HongKongSearch = () => {
               />
               미정산
             </label>
+          </Horizontal>
+          <Horizontal title="작업날짜">
+            <input type="date" />
+          </Horizontal>
+          <Horizontal title="정산날짜">
+            <input type="date" />
           </Horizontal>
         </Table>
         <div className={styles.button}>

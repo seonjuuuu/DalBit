@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import styles from "./Horizontal.module.scss";
 
 type HorizontalProps = {
   title: string;
@@ -7,9 +8,9 @@ type HorizontalProps = {
 
 const Horizontal = ({ title, children }: HorizontalProps) => {
   return (
-    <tr>
-      <th>{title}</th>
-      <td>{children}</td>
+    <tr className={styles.tr}>
+      <th className={styles.th}>{title}</th>
+      <td className={styles.td}>{children}</td>
     </tr>
   );
 };

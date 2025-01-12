@@ -72,6 +72,7 @@ const HongKongTable = () => {
             <th>금액</th>
             <th>정산여부</th>
             <th>정산날짜</th>
+            <th>메모</th>
           </tr>
         </thead>
         <tbody>
@@ -93,6 +94,7 @@ const HongKongTable = () => {
                 <ToggleButton />
               </td>
               <td>{item.settleDate}</td>
+              <td>메모내용메모내용메모내용메모내용메모내용메모내용</td>
             </tr>
           ))}
         </tbody>

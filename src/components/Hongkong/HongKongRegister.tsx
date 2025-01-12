@@ -12,17 +12,26 @@ const HongKongRegister = () => {
     router.push("/hongkong");
   };
   return (
-    <div>
+    <div className={styles.register}>
       <h1 className={styles.title}>홍콩관광청 작업 등록</h1>
       <Table>
         <Horizontal title="작업날짜">
-          <input></input>
+          <input type="date" />
         </Horizontal>
         <Horizontal title="분류">
-          <input></input>
+          <select>
+            <option value="translation">번역</option>
+            <option value="website">홈페이지</option>
+          </select>
+        </Horizontal>
+        <Horizontal title="제목">
+          <input type="text" />
         </Horizontal>
         <Horizontal title="금액">
-          <input></input>
+          <input type="number" />
+        </Horizontal>
+        <Horizontal title="메모">
+          <textarea className={styles.text} />
         </Horizontal>
       </Table>
       <div className={styles.btnWrap}>

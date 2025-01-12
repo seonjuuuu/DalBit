@@ -1,5 +1,15 @@
+.register {
+  text-align: left;
+  input,
+  select {
+    border: 1px solid #cfcfcf;
+    padding: 10px 20px;
+    border-radius: 4px;
+    width: 400px;
+  }
+}
 .title {
-  font-size: 28px;
+  font-size: 20px;
   text-align: left;
   font-weight: 700;
   margin: 30px 0;
@@ -14,4 +24,10 @@
     width: 150px;
     height: 45px;
   }
+}
+
+.text {
+  padding: 20px;
+  width: 400px;
+  height: 200px;
 }
