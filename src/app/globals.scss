@@ -183,6 +183,11 @@ button {
   padding: 10px;
   color: #000000;
   background-color: #f7be1d;
+  cursor: pointer;
+  &.border {
+    background-color: #fff;
+    border: 1px solid #f7be1d;
+  }
 }
 
 .tableList {
