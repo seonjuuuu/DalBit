@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./HongKongTable.module.scss";
 import { useTaskListWithFilter } from "@/api/taskMutation";
 import { useRouter } from "next/navigation";
@@ -12,7 +12,7 @@ const HongKongTable = () => {
 
   const filter = {};
 
-  const { data, isPending, error } = useTaskListWithFilter(filter);
+  const { data, isPending, error, refetch } = useTaskListWithFilter(filter);
 
   const handleSelectAll = () => {
     const newCheckedState = !isChecked;
@@ -33,6 +33,9 @@ const HongKongTable = () => {
   };
 
   const router = useRouter();
+  useEffect(() => {
+    refetch();
+  }, [router]);
 
   return (
     <div className={styles.mainTable}>

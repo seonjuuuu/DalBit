@@ -5,9 +5,10 @@ import { useRouter } from "next/navigation";
 import Horizontal from "../common/table/Horizontal";
 import Table from "../common/table/Table";
 import styles from "./HongKongRegister.module.scss";
-import { useRegisterTask } from "@/api/taskMutation";
+import { useRegisterTask, useTaskUpdate } from "@/api/taskMutation";
 import ToggleButton from "../common/ToggleButton";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 type FormData = {
   workDate: string;
@@ -46,9 +47,11 @@ const HongKongRegister = ({ initialValues }: Props) => {
       settledDate: ""
     }
   });
-
+  const queryClient = useQueryClient();
   const router = useRouter();
-  const { mutate, isPending, error } = useRegisterTask();
+  const { mutate: registerTask } = useRegisterTask();
+  const { mutate: updateTask } = useTaskUpdate();
+
   const category = watch("category");
 
   const { field } = useController({
@@ -80,26 +83,54 @@ const HongKongRegister = ({ initialValues }: Props) => {
       });
       return;
     }
-    mutate(
-      {
-        title: data.title,
-        memo: data.memo,
-        category: data.category,
-        amount: Number(data.amount),
-        workDate: data.workDate,
-        settled: data.settled,
-        settledDate: data.settledDate === null ? "" : data.settledDate
-      },
-      {
-        onSuccess: (response) => {
+    const taskData = {
+      title: data.title,
+      memo: data.memo,
+      category: data.category,
+      amount: Number(data.amount),
+      workDate: data.workDate,
+      settled: data.settled,
+      settledDate: data.settledDate || null
+    };
+    //수정
+    if (initialValues && initialValues._id) {
+      updateTask(
+        { id: initialValues._id, params: taskData },
+        {
+          onSuccess: () => {
+            alert("수정에 성공하였습니다.");
+            reset();
+            router.push("/hongkong");
+            queryClient.invalidateQueries({
+              queryKey: ["taskListWithFilter", {}]
+            });
+            queryClient.invalidateQueries({
+              queryKey: ["getDetail", initialValues._id]
+            });
+          },
+          onError: (error) => {
+            console.error(error);
+            alert("수정에 실패하였습니다.");
+          }
+        }
+      );
+    } else {
+      // 등록
+      registerTask(taskData, {
+        onSuccess: () => {
           alert("등록에 성공하였습니다.");
+          reset();
+          router.push("/hongkong");
+          queryClient.invalidateQueries({
+            queryKey: ["taskListWithFilter", {}]
+          });
         },
         onError: (error) => {
           console.error(error);
           alert("등록에 실패하였습니다.");
         }
-      }
-    );
+      });
+    }
     reset();
     router.push("/hongkong");
   };
@@ -203,7 +234,7 @@ const HongKongRegister = ({ initialValues }: Props) => {
           </Horizontal>
         </Table>
         <div className={styles.btnWrap}>
-          <button type="submit">등록</button>
+          <button type="submit">{initialValues ? "수정" : "등록"}</button>
           <button type="button" className="border" onClick={handleCancel}>
             취소
           </button>

@@ -1,12 +1,15 @@
 "use client";
 import { useTaskDetail } from "@/api/taskMutation";
 import HongKongRegister from "./HongKongRegister";
+import { useQueryClient } from "@tanstack/react-query";
 
 type ModifyProps = {
   id: string;
 };
 
 const HongKongModify = ({ id }: ModifyProps) => {
+  const queryClient = useQueryClient();
+
   const { data, isPending, error } = useTaskDetail(id);
 
   if (isPending) {

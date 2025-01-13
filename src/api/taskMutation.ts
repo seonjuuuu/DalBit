@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axiosClient from "./axiosApi/axiosClient";
+import { queryClient } from "./queryClient";
 
 export type TaskParams = {
   title: string;
@@ -8,7 +9,7 @@ export type TaskParams = {
   workDate: string;
   amount: number;
   settled: boolean;
-  settledDate: string;
+  settledDate: string | null;
 };
 
 export type Task = {
@@ -88,7 +89,9 @@ export const useTaskListWithFilter = (filters: {
   return useQuery<TaskResponse, Error>({
     queryKey: ["taskListWithFilter", filters],
     queryFn: async () => await taskListWithFilter(filters),
-    enabled: true
+    enabled: true,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true
   });
 };
 
@@ -102,5 +105,30 @@ export const useTaskDetail = (id: string) => {
     queryKey: ["getDetail", id],
     queryFn: async () => await getDetail(id),
     enabled: true
+  });
+};
+
+export const taskUpdate = async (
+  id: string,
+  params: TaskParams
+): Promise<TaskRegisterResponse> => {
+  const response = await axiosClient.put<TaskRegisterResponse>(
+    `/task/${id}`,
+    params
+  );
+  return response.data;
+};
+
+export const useTaskUpdate = () => {
+  return useMutation<
+    TaskRegisterResponse,
+    Error,
+    { id: string; params: TaskParams }
+  >({
+    mutationFn: ({ id, params }) => taskUpdate(id, params),
+    onSuccess: (data, { id }) => {
+      queryClient.invalidateQueries({ queryKey: ["taskListWithFilter", {}] });
+      queryClient.invalidateQueries({ queryKey: ["getDetail", id] });
+    }
   });
 };
