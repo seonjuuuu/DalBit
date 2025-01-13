@@ -118,16 +118,38 @@ const HongKongSearch = ({ onFilterChange }: Props) => {
             </label>
           </Horizontal>
 
-          {/* "작업날짜" 행 */}
+          {/* "전달날짜" 행 */}
           <Horizontal title="전달날짜">
-            <input type="date" {...register("startDate")} /> ~
-            <input type="date" {...register("endDate")} />
+            <div className={styles.dateWrap}>
+              <input
+                className={styles.date}
+                type="date"
+                {...register("startDate")}
+              />
+              ~
+              <input
+                className={styles.date}
+                type="date"
+                {...register("endDate")}
+              />
+            </div>
           </Horizontal>
 
           {/* "정산날짜" 행 */}
           <Horizontal title="정산날짜">
-            <input type="date" {...register("settledStart")} /> ~
-            <input type="date" {...register("settledEnd")} />
+            <div className={styles.dateWrap}>
+              <input
+                className={styles.date}
+                type="date"
+                {...register("settledStart")}
+              />
+              ~
+              <input
+                className={styles.date}
+                type="date"
+                {...register("settledEnd")}
+              />
+            </div>
           </Horizontal>
         </Table>
         <div className={styles.button}>
