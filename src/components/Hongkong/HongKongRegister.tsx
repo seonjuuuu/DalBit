@@ -62,8 +62,10 @@ const HongKongRegister = ({ initialValues }: Props) => {
 
   useEffect(() => {
     if (initialValues) {
-      reset(initialValues);
-      setValue("settled", initialValues.settled || false);
+      reset({
+        ...initialValues,
+        settled: initialValues.settled || false
+      });
     }
   }, [initialValues, reset]);
 
@@ -98,15 +100,19 @@ const HongKongRegister = ({ initialValues }: Props) => {
         { id: initialValues._id, params: taskData },
         {
           onSuccess: () => {
-            alert("수정에 성공하였습니다.");
-            reset();
-            router.push("/hongkong");
             queryClient.invalidateQueries({
               queryKey: ["taskListWithFilter", {}]
             });
-            queryClient.invalidateQueries({
-              queryKey: ["getDetail", initialValues._id]
-            });
+            queryClient
+              .invalidateQueries({
+                queryKey: ["getDetail", initialValues._id]
+              })
+              .then(() => {
+                console.log("taskData", taskData);
+                reset(taskData);
+                alert("수정에 성공하였습니다.");
+                router.push("/hongkong");
+              });
           },
           onError: (error) => {
             console.error(error);
@@ -119,11 +125,11 @@ const HongKongRegister = ({ initialValues }: Props) => {
       registerTask(taskData, {
         onSuccess: () => {
           alert("등록에 성공하였습니다.");
-          reset();
           router.push("/hongkong");
           queryClient.invalidateQueries({
             queryKey: ["taskListWithFilter", {}]
           });
+          reset();
         },
         onError: (error) => {
           console.error(error);
@@ -131,8 +137,6 @@ const HongKongRegister = ({ initialValues }: Props) => {
         }
       });
     }
-    reset();
-    router.push("/hongkong");
   };
 
   const handleDate = (event: React.MouseEvent<HTMLButtonElement>) => {
