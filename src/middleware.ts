@@ -30,7 +30,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  if (pathname === "/login" || pathname === "register") {
+  if (pathname === "/login" || pathname === "/register") {
     if (isTokenValid) {
       return NextResponse.redirect(new URL("/", request.url));
     }
