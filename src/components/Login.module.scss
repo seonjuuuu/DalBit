@@ -18,10 +18,15 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   flex-direction: column;
   gap: 20px;
   margin-top: 80px;
+  label {
+    margin: 0 auto;
+  }
+  p {
+    margin-left: 188px;
+  }
 }
 
 .inputBox {
@@ -36,7 +41,8 @@
     padding: 10px;
     border: none;
     background-color: #f1f1f1;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    box-shadow:
+      rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
       rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     border-radius: 10px;
     height: 40px;
@@ -65,4 +71,11 @@
   text-align: center;
   background-color: #fff;
   border: 1px solid #f7be1d;
+}
+
+.error {
+  color: red;
+  font-size: 11px;
+  display: block;
+  text-align: left;
 }

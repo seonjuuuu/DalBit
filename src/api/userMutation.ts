@@ -12,6 +12,20 @@ export type RegisterResponse = {
   userId: number;
 };
 
+export type LoginParams = Omit<RegisterParams, "name">;
+
+export type User = {
+  _id: string;
+  loginId: string;
+  name: string;
+};
+
+export type LoginResponse = {
+  status: "success" | "error";
+  user: User;
+  token: string;
+};
+
 export const registerUser = async (
   params: RegisterParams
 ): Promise<RegisterResponse> => {
@@ -19,8 +33,22 @@ export const registerUser = async (
   return response.data;
 };
 
+export const loginUser = async (
+  params: LoginParams
+): Promise<LoginResponse> => {
+  const response = await axiosClient.post<LoginResponse>("/auth/login", params);
+  console.log("login_res____", response);
+  return response.data;
+};
+
 export const useRegisterUser = () => {
   return useMutation<RegisterResponse, Error, RegisterParams>({
     mutationFn: registerUser
+  });
+};
+
+export const useLoginUser = () => {
+  return useMutation<LoginResponse, Error, LoginParams>({
+    mutationFn: loginUser
   });
 };
