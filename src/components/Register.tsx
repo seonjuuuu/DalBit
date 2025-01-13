@@ -1,6 +1,17 @@
+"use client";
+import axiosClient from "@/api/axiosApi/axiosClient";
 import styles from "./Register.module.scss";
 
 const Register = () => {
+  const handleRegister = async () => {
+    try {
+      // const res = await axiosClient.post("/user", params);
+      // console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className={styles.register}>
       <h2 className={styles.title}>회원가입</h2>
@@ -23,7 +34,9 @@ const Register = () => {
         </label>
       </div>
       <div className={styles.btnWrap}>
-        <button className={styles.registerBtn}>회원가입</button>
+        <button className={styles.registerBtn} onClick={handleRegister}>
+          회원가입
+        </button>
         <button className={styles.loginBtn}>로그인하기</button>
       </div>
     </div>
