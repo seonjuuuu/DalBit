@@ -3,14 +3,19 @@ import { useEffect, useState } from "react";
 import styles from "./HongKongTable.module.scss";
 import { useDeleteTask, useTaskListWithFilter } from "@/api/taskMutation";
 import { useRouter } from "next/navigation";
+import { Filter } from "@/app/hongkong/page";
 
-const HongKongTable = () => {
+type Props = {
+  filter: Omit<Filter, "category"> & {
+    category?: Exclude<Filter["category"], "total">;
+  };
+};
+
+const HongKongTable = ({ filter }: Props) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [checkedItems, setCheckedItems] = useState<boolean[]>(
     new Array(2).fill(false)
   );
-
-  const filter = {};
 
   const { data, isPending, refetch } = useTaskListWithFilter(filter);
 

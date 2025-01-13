@@ -5,29 +5,40 @@ import styles from "./HongKongSearch.module.scss";
 import Table from "../common/table/Table";
 import Horizontal from "../common/table/Horizontal";
 import { useRouter } from "next/navigation";
+import { Filter } from "@/app/hongkong/page";
 
-type FormData = {
-  category: string;
-  settlement: string;
-  workDate: string;
-  settlementDate: string;
+type Props = {
+  onFilterChange: (filter: Filter) => void;
 };
 
-const HongKongSearch = () => {
-  const { register, handleSubmit, watch } = useForm<FormData>({
+const HongKongSearch = ({ onFilterChange }: Props) => {
+  const { register, handleSubmit, watch } = useForm<Filter>({
     defaultValues: {
       category: "total",
       settlement: "total",
-      workDate: "",
-      settlementDate: ""
+      startDate: "",
+      endDate: "",
+      settledStart: "",
+      settledEnd: ""
     }
   });
 
   const router = useRouter();
 
-  const onSubmit = (data: FormData) => {
-    console.log("검색 조건:", data);
-    // 데이터를 기반으로 API 호출 또는 상태 업데이트
+  const onSubmit = (data: Filter) => {
+    const cleanedFilter = Object.fromEntries(
+      Object.entries(data).filter(
+        ([key, value]) =>
+          key !== "settlement" && value !== "" && value !== "total"
+      )
+    );
+    if (data.settlement === "settled") {
+      cleanedFilter["settled"] = true;
+    } else if (data.settlement === "pending") {
+      cleanedFilter["settled"] = false;
+    }
+
+    onFilterChange(cleanedFilter);
   };
 
   const handleWork = () => {
@@ -56,8 +67,8 @@ const HongKongSearch = () => {
               <input
                 type="radio"
                 {...register("category")}
-                value="translate"
-                checked={watch("category") === "translate"}
+                value="translation"
+                checked={watch("category") === "translation"}
               />
               번역
             </label>
@@ -105,12 +116,14 @@ const HongKongSearch = () => {
 
           {/* "작업날짜" 행 */}
           <Horizontal title="전달날짜">
-            <input type="date" {...register("workDate")} />
+            <input type="date" {...register("startDate")} /> ~
+            <input type="date" {...register("endDate")} />
           </Horizontal>
 
           {/* "정산날짜" 행 */}
           <Horizontal title="정산날짜">
-            <input type="date" {...register("settlementDate")} />
+            <input type="date" {...register("settledStart")} /> ~
+            <input type="date" {...register("settledEnd")} />
           </Horizontal>
         </Table>
         <div className={styles.button}>

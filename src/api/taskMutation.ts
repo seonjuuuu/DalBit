@@ -88,6 +88,8 @@ export const useTaskListWithFilter = (filters: {
   startDate?: string;
   endDate?: string;
   settled?: boolean;
+  settledEnd?: string;
+  settledStart?: string;
 }) => {
   return useQuery<TaskResponse, Error>({
     queryKey: ["taskListWithFilter", filters],
