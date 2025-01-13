@@ -40,10 +40,16 @@ const HongKongTable = () => {
   return (
     <div className={styles.mainTable}>
       <div className={styles.cost}>
-        <div className={styles.total}> 총 금액 : 10,000원</div>
+        <div className={styles.total}>
+          총 금액 : {data ? data.totalAmount.toLocaleString() : 0}원
+        </div>
         <div className={styles.amount}>
-          <div className={styles.settledAmount}> 정산 금액 : 5,000원</div>
-          <div className={styles.pendingAmount}> 미정산금액 : 5,000원</div>
+          <div className={styles.settledAmount}>
+            정산 금액 : {data ? data.settledAmount.toLocaleString() : "-"}원
+          </div>
+          <div className={styles.pendingAmount}>
+            미정산금액 : {data ? data.unsettledAmount.toLocaleString() : "-"}원
+          </div>
         </div>
       </div>
       <table className="tableList">
@@ -96,11 +102,12 @@ const HongKongTable = () => {
                 <td>{item.amount.toLocaleString()}</td>
                 <td>{item.settled ? "Y" : "N"}</td>
                 <td>
-                  {item.settledDate &&
-                  isNaN(new Date(item.settledDate).getTime())
-                    ? "-"
-                    : item.settledDate &&
-                      new Date(item.settledDate).toISOString().split("T")[0]}
+                  {item.settledDate
+                    ? isNaN(new Date(item.settledDate).getTime())
+                      ? "-"
+                      : item.settledDate &&
+                        new Date(item.settledDate).toISOString().split("T")[0]
+                    : "-"}
                 </td>
                 <td className={styles.field}>{item.memo}</td>
               </tr>

@@ -31,6 +31,9 @@ export type TaskResponse = {
   tasks: Task[];
   settled: boolean | null;
   settledDate: string | null;
+  totalAmount: number;
+  settledAmount: number;
+  unsettledAmount: number;
 };
 
 export type TaskDetailResponse = {
