@@ -21,6 +21,11 @@
   font-size: 18px;
 }
 
-.field {
+.field,
+.title {
   width: 320px;
+}
+
+.title {
+  cursor: pointer;
 }

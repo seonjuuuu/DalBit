@@ -76,7 +76,7 @@ const HongKongTable = () => {
                 </td>
                 <td>{index + 1}</td>
                 <td
-                  className={styles.field}
+                  className={styles.title}
                   onClick={(event) => {
                     event.preventDefault();
                     router.push(`/detail/${item._id}`);

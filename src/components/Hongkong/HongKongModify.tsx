@@ -9,8 +9,6 @@ type ModifyProps = {
 const HongKongModify = ({ id }: ModifyProps) => {
   const { data, isPending, error } = useTaskDetail(id);
 
-  console.log("data", data);
-
   if (isPending) {
     return <div>로딩 중...</div>;
   }
