@@ -1,11 +1,12 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useController, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Horizontal from "../common/table/Horizontal";
 import Table from "../common/table/Table";
 import styles from "./HongKongRegister.module.scss";
 import { useRegisterTask } from "@/api/taskMutation";
+import ToggleButton from "../common/ToggleButton";
 
 type FormData = {
   workDate: string;
@@ -13,6 +14,8 @@ type FormData = {
   title: string;
   amount: number;
   memo: string;
+  settled: boolean;
+  settledDate: string;
 };
 
 const HongKongRegister = () => {
@@ -22,6 +25,7 @@ const HongKongRegister = () => {
     reset,
     setValue,
     watch,
+    control,
     formState: { errors }
   } = useForm<FormData>({
     defaultValues: {
@@ -29,13 +33,21 @@ const HongKongRegister = () => {
       category: "translation",
       title: "",
       amount: 0,
-      memo: ""
+      memo: "",
+      settled: false,
+      settledDate: ""
     }
   });
 
   const router = useRouter();
   const { mutate, isPending, error } = useRegisterTask();
   const category = watch("category");
+
+  const { field } = useController({
+    name: "settled",
+    control,
+    defaultValue: false // 기본값
+  });
 
   if (category === "homepage") {
     setValue("amount", 500000);
@@ -52,7 +64,9 @@ const HongKongRegister = () => {
         memo: data.memo,
         category: data.category,
         amount: Number(data.amount),
-        workDate: data.workDate
+        workDate: data.workDate,
+        settled: data.settled,
+        settledDate: data.settledDate
       },
       {
         onSuccess: (response) => {
@@ -77,7 +91,7 @@ const HongKongRegister = () => {
   return (
     <div className={styles.register}>
       <h1 className={styles.title}>홍콩관광청 작업 등록</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.formWrap}>
         <Table>
           <Horizontal title="전달날짜">
             <input
@@ -142,6 +156,12 @@ const HongKongRegister = () => {
             {errors.memo && (
               <p className={styles.error}>{errors.memo.message}</p>
             )}
+          </Horizontal>
+          <Horizontal title="정산 여부">
+            <ToggleButton checked={field.value} onChange={field.onChange} />
+          </Horizontal>
+          <Horizontal title="정산 날짜">
+            <input type="date" {...register("settledDate", {})} />
           </Horizontal>
         </Table>
         <div className={styles.btnWrap}>

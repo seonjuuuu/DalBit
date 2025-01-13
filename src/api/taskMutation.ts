@@ -7,6 +7,8 @@ export type TaskParams = {
   memo?: string;
   workDate: string;
   amount: number;
+  settled: boolean;
+  settledDate: string;
 };
 
 export type Task = {

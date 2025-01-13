@@ -82,7 +82,13 @@ const HongKongTable = () => {
                 </td>
                 <td>{item.amount.toLocaleString()}</td>
                 <td>{item.settled ? "Y" : "N"}</td>
-                <td>{item.settledDate || "-"}</td>
+                <td>
+                  {item.settledDate &&
+                  isNaN(new Date(item.settledDate).getTime())
+                    ? "-"
+                    : item.settledDate &&
+                      new Date(item.settledDate).toISOString().split("T")[0]}
+                </td>
                 <td className={styles.field}>{item.memo}</td>
               </tr>
             ))}
