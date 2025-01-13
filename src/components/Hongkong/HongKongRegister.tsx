@@ -7,6 +7,7 @@ import Table from "../common/table/Table";
 import styles from "./HongKongRegister.module.scss";
 import { useRegisterTask } from "@/api/taskMutation";
 import ToggleButton from "../common/ToggleButton";
+import { useEffect } from "react";
 
 type FormData = {
   workDate: string;
@@ -15,7 +16,8 @@ type FormData = {
   amount: number;
   memo: string;
   settled: boolean;
-  settledDate: string;
+  settledDate: string | null;
+  _id?: string;
 };
 
 type Props = {
@@ -35,13 +37,13 @@ const HongKongRegister = ({ initialValues }: Props) => {
     formState: { errors }
   } = useForm<FormData>({
     defaultValues: {
-      workDate: initialValues?.workDate || "",
-      category: initialValues?.category || "translation",
-      title: initialValues?.title || "",
-      amount: initialValues?.amount || 0,
-      memo: initialValues?.memo || "",
-      settled: initialValues?.settled || false,
-      settledDate: initialValues?.settledDate || ""
+      workDate: "",
+      category: "translation",
+      title: "",
+      amount: 0,
+      memo: "",
+      settled: false,
+      settledDate: ""
     }
   });
 
@@ -54,6 +56,13 @@ const HongKongRegister = ({ initialValues }: Props) => {
     control,
     defaultValue: false
   });
+
+  useEffect(() => {
+    if (initialValues) {
+      reset(initialValues);
+      setValue("settled", initialValues.settled || false);
+    }
+  }, [initialValues, reset]);
 
   if (category === "homepage") {
     setValue("amount", 500000);
@@ -79,7 +88,7 @@ const HongKongRegister = ({ initialValues }: Props) => {
         amount: Number(data.amount),
         workDate: data.workDate,
         settled: data.settled,
-        settledDate: data.settledDate
+        settledDate: data.settledDate === null ? "" : data.settledDate
       },
       {
         onSuccess: (response) => {

@@ -79,7 +79,7 @@ const HongKongTable = () => {
                   className={styles.field}
                   onClick={(event) => {
                     event.preventDefault();
-                    router.push(`/details/${item._id}`);
+                    router.push(`/detail/${item._id}`);
                   }}
                 >
                   {item.title}

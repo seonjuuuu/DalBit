@@ -32,6 +32,11 @@ export type TaskResponse = {
   settledDate: string | null;
 };
 
+export type TaskDetailResponse = {
+  status: "success" | "error";
+  task: Task;
+};
+
 export type TaskRegisterResponse = {
   status: "success" | "error";
   message: string;
@@ -83,6 +88,19 @@ export const useTaskListWithFilter = (filters: {
   return useQuery<TaskResponse, Error>({
     queryKey: ["taskListWithFilter", filters],
     queryFn: async () => await taskListWithFilter(filters),
+    enabled: true
+  });
+};
+
+export const getDetail = async (id: string): Promise<TaskDetailResponse> => {
+  const response = await axiosClient.get<TaskDetailResponse>(`/task/${id}`);
+  return response.data;
+};
+
+export const useTaskDetail = (id: string) => {
+  return useQuery<TaskDetailResponse, Error>({
+    queryKey: ["getDetail", id],
+    queryFn: async () => await getDetail(id),
     enabled: true
   });
 };

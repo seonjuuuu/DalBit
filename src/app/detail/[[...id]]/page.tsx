@@ -1,9 +1,16 @@
-import HongKongRegister from "@/components/Hongkong/HongKongRegister";
+import HongKongModify from "@/components/Hongkong/HongKongModify";
 
-const Detail = () => {
+type DetailProps = {
+  params: {
+    id: string;
+  };
+};
+
+const Detail = ({ params }: DetailProps) => {
+  const { id } = params;
   return (
     <div>
-      <HongKongRegister />
+      <HongKongModify id={id[0]} />
     </div>
   );
 };
