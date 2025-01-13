@@ -12,7 +12,7 @@ const HongKongTable = () => {
 
   const filter = {};
 
-  const { data, refetch } = useTaskListWithFilter(filter);
+  const { data, isPending, refetch } = useTaskListWithFilter(filter);
 
   const handleSelectAll = () => {
     const newCheckedState = !isChecked;
@@ -81,7 +81,13 @@ const HongKongTable = () => {
           </tr>
         </thead>
         <tbody>
-          {data && data.tasks.length > 0 ? (
+          {isPending ? (
+            <tr>
+              <td colSpan={10} className={styles.loading}>
+                데이터를 로딩 중입니다...
+              </td>
+            </tr>
+          ) : data && data.tasks.length > 0 ? (
             data.tasks.map((item, index) => (
               <tr key={index}>
                 <td>
@@ -113,8 +119,7 @@ const HongKongTable = () => {
                   {item.settledDate
                     ? isNaN(new Date(item.settledDate).getTime())
                       ? "-"
-                      : item.settledDate &&
-                        new Date(item.settledDate).toISOString().split("T")[0]
+                      : new Date(item.settledDate).toISOString().split("T")[0]
                     : "-"}
                 </td>
                 <td className={styles.field}>{item.memo}</td>
