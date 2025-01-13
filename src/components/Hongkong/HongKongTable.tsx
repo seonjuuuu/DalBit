@@ -17,6 +17,8 @@ const HongKongTable = ({ filter }: Props) => {
     new Array(2).fill(false)
   );
 
+  console.log(filter);
+
   const { data, isPending, refetch } = useTaskListWithFilter(filter);
 
   const handleSelectAll = () => {

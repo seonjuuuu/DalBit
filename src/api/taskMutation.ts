@@ -67,12 +67,16 @@ export const taskListWithFilter = async (filters: {
   startDate?: string;
   endDate?: string;
   settled?: boolean;
+  settledStart?: string;
+  settledEnd?: string;
 }): Promise<TaskResponse> => {
   const params = new URLSearchParams();
 
   if (filters.category) params.append("category", filters.category);
   if (filters.startDate) params.append("startDate", filters.startDate);
   if (filters.endDate) params.append("endDate", filters.endDate);
+  if (filters.settledStart) params.append("settledStart", filters.settledStart);
+  if (filters.settledEnd) params.append("settledEnd", filters.settledEnd);
   if (typeof filters.settled === "boolean") {
     params.append("settled", filters.settled.toString());
   }
