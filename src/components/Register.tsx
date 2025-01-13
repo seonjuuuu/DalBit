@@ -2,6 +2,7 @@
 import { useForm } from "react-hook-form";
 import styles from "./Register.module.scss";
 import { useRegisterUser } from "@/api/userMutation";
+import { useRouter } from "next/navigation";
 
 type FormData = {
   loginId: string;
@@ -14,17 +15,16 @@ const Register = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors }
   } = useForm<FormData>();
   const { mutate, isPending } = useRegisterUser();
+  const router = useRouter();
 
   const onSubmit = (data: FormData) => {
     if (data.password !== data.confirmPassword) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
-    console.log("1");
 
     mutate(
       {
@@ -35,6 +35,7 @@ const Register = () => {
       {
         onSuccess: () => {
           alert("회원가입이 완료되었습니다.");
+          router.push("/login");
         },
         onError: (error) => {
           console.error("회원가입 실패:", error);
