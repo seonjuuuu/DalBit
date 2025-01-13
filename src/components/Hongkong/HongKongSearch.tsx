@@ -12,7 +12,7 @@ type Props = {
 };
 
 const HongKongSearch = ({ onFilterChange }: Props) => {
-  const { register, handleSubmit, watch } = useForm<Filter>({
+  const { register, handleSubmit, watch, reset } = useForm<Filter>({
     defaultValues: {
       category: "total",
       settlement: "total",
@@ -43,6 +43,10 @@ const HongKongSearch = ({ onFilterChange }: Props) => {
 
   const handleWork = () => {
     router.push("/work-register");
+  };
+
+  const handleInit = () => {
+    reset();
   };
 
   return (
@@ -129,6 +133,13 @@ const HongKongSearch = ({ onFilterChange }: Props) => {
         <div className={styles.button}>
           <button type="submit" className={styles.btnSearch}>
             검색하기
+          </button>
+          <button
+            type="button"
+            className={`${styles.btnSearch} ${styles.border}`}
+            onClick={handleInit}
+          >
+            초기화
           </button>
         </div>
       </form>

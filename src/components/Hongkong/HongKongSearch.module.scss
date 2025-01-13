@@ -13,13 +13,22 @@
     }
   }
 }
-
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
 .btnSearch {
   margin-top: 30px;
   font-size: 14px;
   width: 130px;
   height: 50px;
   cursor: pointer;
+  &.border {
+    background-color: #fff;
+    border: 1px solid #f7be1d;
+  }
 }
 
 .btn {
