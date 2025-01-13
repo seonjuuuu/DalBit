@@ -6,8 +6,8 @@ type DetailProps = {
   };
 };
 
-const Detail = ({ params }: DetailProps) => {
-  const { id } = params;
+const Detail = async ({ params }: DetailProps) => {
+  const { id } = await params;
   return (
     <div>
       <HongKongModify id={id[0]} />
