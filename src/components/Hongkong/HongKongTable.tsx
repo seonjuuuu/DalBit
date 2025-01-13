@@ -68,7 +68,7 @@ const HongKongTable = () => {
             <th>번호</th>
             <th>제목</th>
             <th>분류</th>
-            <th>작업날짜</th>
+            <th>전달날짜</th>
             <th>금액</th>
             <th>정산여부</th>
             <th>정산날짜</th>
