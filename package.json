@@ -11,9 +11,11 @@
   "dependencies": {
     "@tanstack/react-query": "^5.64.0",
     "@tanstack/react-query-devtools": "^5.64.0",
+    "js-cookie": "^3.0.5",
     "next": "^15.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.2",
     "react-switch": "^7.1.0",
     "sass": "^1.83.1",
     "webpack": "^5.97.1"

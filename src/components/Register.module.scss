@@ -18,10 +18,15 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   flex-direction: column;
   gap: 20px;
-  margin-top: 50px;
+  margin-top: 25px;
+  label {
+    margin: 0 auto;
+  }
+  p {
+    margin-left: 188px;
+  }
 }
 
 .inputBox {
@@ -66,4 +71,11 @@
   text-align: center;
   background-color: #fff;
   border: 1px solid #f7be1d;
+}
+
+.error {
+  color: red;
+  font-size: 11px;
+  display: block;
+  text-align: left;
 }
