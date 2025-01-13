@@ -135,3 +135,19 @@ export const useTaskUpdate = () => {
     }
   });
 };
+
+export const taskDelete = async (id: string): Promise<TaskRegisterResponse> => {
+  const response = await axiosClient.delete<TaskRegisterResponse>(
+    `/task/${id}`
+  );
+  return response.data;
+};
+
+export const useDeleteTask = () => {
+  return useMutation<TaskRegisterResponse, Error, { id: string }>({
+    mutationFn: ({ id }) => taskDelete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["taskListWithFilter"] });
+    }
+  });
+};

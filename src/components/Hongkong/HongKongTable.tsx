@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import styles from "./HongKongTable.module.scss";
-import { useTaskListWithFilter } from "@/api/taskMutation";
+import { useDeleteTask, useTaskListWithFilter } from "@/api/taskMutation";
 import { useRouter } from "next/navigation";
 
 const HongKongTable = () => {
@@ -12,7 +12,7 @@ const HongKongTable = () => {
 
   const filter = {};
 
-  const { data, isPending, error, refetch } = useTaskListWithFilter(filter);
+  const { data, refetch } = useTaskListWithFilter(filter);
 
   const handleSelectAll = () => {
     const newCheckedState = !isChecked;
@@ -36,6 +36,13 @@ const HongKongTable = () => {
   useEffect(() => {
     refetch();
   }, [router]);
+
+  const { mutate, isError, isSuccess } = useDeleteTask();
+
+  const handleDelete = (id: string) => {
+    if (!confirm("삭제하시겠습니까?")) return;
+    mutate({ id });
+  };
 
   return (
     <div className={styles.mainTable}>
@@ -70,10 +77,11 @@ const HongKongTable = () => {
             <th>정산여부</th>
             <th>정산날짜</th>
             <th>메모</th>
+            <th>삭제</th>
           </tr>
         </thead>
         <tbody>
-          {data &&
+          {data && data.tasks.length > 0 ? (
             data.tasks.map((item, index) => (
               <tr key={index}>
                 <td>
@@ -110,8 +118,18 @@ const HongKongTable = () => {
                     : "-"}
                 </td>
                 <td className={styles.field}>{item.memo}</td>
+                <td>
+                  <button onClick={() => handleDelete(item._id)}>삭제</button>
+                </td>
               </tr>
-            ))}
+            ))
+          ) : (
+            <tr>
+              <td colSpan={10} className={styles.noData}>
+                데이터가 없습니다.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
