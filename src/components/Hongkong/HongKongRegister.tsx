@@ -26,6 +26,8 @@ const HongKongRegister = () => {
     setValue,
     watch,
     control,
+    setError,
+    clearErrors,
     formState: { errors }
   } = useForm<FormData>({
     defaultValues: {
@@ -46,7 +48,7 @@ const HongKongRegister = () => {
   const { field } = useController({
     name: "settled",
     control,
-    defaultValue: false // 기본값
+    defaultValue: false
   });
 
   if (category === "homepage") {
@@ -58,6 +60,13 @@ const HongKongRegister = () => {
   };
 
   const onSubmit = (data: FormData) => {
+    if (data.settled && !data.settledDate) {
+      setError("settledDate", {
+        type: "required",
+        message: "정산 날짜를 입력해주세요."
+      });
+      return;
+    }
     mutate(
       {
         title: data.title,
@@ -158,10 +167,26 @@ const HongKongRegister = () => {
             )}
           </Horizontal>
           <Horizontal title="정산 여부">
-            <ToggleButton checked={field.value} onChange={field.onChange} />
+            <ToggleButton
+              checked={field.value}
+              onChange={(checked) => {
+                field.onChange(checked);
+                if (!checked) {
+                  setValue("settledDate", "");
+                  clearErrors("settledDate");
+                }
+              }}
+            />
           </Horizontal>
           <Horizontal title="정산 날짜">
-            <input type="date" {...register("settledDate", {})} />
+            <input
+              type="date"
+              {...register("settledDate", {})}
+              disabled={!field.value}
+            />
+            {errors.settledDate && (
+              <p className={styles.error}>{errors.settledDate.message}</p>
+            )}
           </Horizontal>
         </Table>
         <div className={styles.btnWrap}>
