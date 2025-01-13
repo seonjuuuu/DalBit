@@ -18,7 +18,11 @@ type FormData = {
   settledDate: string;
 };
 
-const HongKongRegister = () => {
+type Props = {
+  initialValues?: Partial<FormData>;
+};
+
+const HongKongRegister = ({ initialValues }: Props) => {
   const {
     register,
     handleSubmit,
@@ -31,13 +35,13 @@ const HongKongRegister = () => {
     formState: { errors }
   } = useForm<FormData>({
     defaultValues: {
-      workDate: "",
-      category: "translation",
-      title: "",
-      amount: 0,
-      memo: "",
-      settled: false,
-      settledDate: ""
+      workDate: initialValues?.workDate || "",
+      category: initialValues?.category || "translation",
+      title: initialValues?.title || "",
+      amount: initialValues?.amount || 0,
+      memo: initialValues?.memo || "",
+      settled: initialValues?.settled || false,
+      settledDate: initialValues?.settledDate || ""
     }
   });
 
@@ -79,7 +83,7 @@ const HongKongRegister = () => {
       },
       {
         onSuccess: (response) => {
-          console.log(response);
+          alert("등록에 성공하였습니다.");
         },
         onError: (error) => {
           console.error(error);

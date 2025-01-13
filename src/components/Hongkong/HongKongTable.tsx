@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import ToggleButton from "../common/ToggleButton";
 import styles from "./HongKongTable.module.scss";
 import { useTaskListWithFilter } from "@/api/taskMutation";
+import { useRouter } from "next/navigation";
 
 const HongKongTable = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -31,6 +31,8 @@ const HongKongTable = () => {
       setIsChecked(false);
     }
   };
+
+  const router = useRouter();
 
   return (
     <div className={styles.mainTable}>
@@ -73,7 +75,15 @@ const HongKongTable = () => {
                   />
                 </td>
                 <td>{index + 1}</td>
-                <td className={styles.field}>{item.title}</td>
+                <td
+                  className={styles.field}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    router.push(`/details/${item._id}`);
+                  }}
+                >
+                  {item.title}
+                </td>
                 <td>{item.category === "homepage" ? "홈페이지" : "번역"}</td>
                 <td>
                   {isNaN(new Date(item.workDate).getTime())
