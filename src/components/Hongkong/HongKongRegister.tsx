@@ -59,6 +59,7 @@ const HongKongRegister = () => {
           console.log(response);
         },
         onError: (error) => {
+          console.error(error);
           alert("등록에 실패하였습니다.");
         }
       }
