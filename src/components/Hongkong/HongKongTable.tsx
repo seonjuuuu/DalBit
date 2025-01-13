@@ -2,6 +2,7 @@
 import { useState } from "react";
 import ToggleButton from "../common/ToggleButton";
 import styles from "./HongKongTable.module.scss";
+import { useTaskListWithFilter } from "@/api/taskMutation";
 
 const HongKongTable = () => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -9,29 +10,14 @@ const HongKongTable = () => {
     new Array(2).fill(false)
   );
 
-  const data = [
-    {
-      id: 1,
-      title: "번역작업",
-      category: "번역",
-      date: "2024-01-01",
-      amount: "500,000",
-      settleDate: "2024-01-27"
-    },
-    {
-      id: 2,
-      title: "아웃도어캠페인",
-      category: "홈페이지",
-      date: "2024-01-01",
-      amount: "500,000",
-      settleDate: "2024-01-27"
-    }
-  ];
+  const filter = {};
+
+  const { data, isPending, error } = useTaskListWithFilter(filter);
 
   const handleSelectAll = () => {
     const newCheckedState = !isChecked;
     setIsChecked(newCheckedState);
-    setCheckedItems(new Array(data.length).fill(newCheckedState));
+    data && setCheckedItems(new Array(data.tasks.length).fill(newCheckedState));
   };
 
   const handleCheckboxChange = (index: number) => {
@@ -76,27 +62,30 @@ const HongKongTable = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => (
-            <tr key={item.id}>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={checkedItems[index]}
-                  onChange={() => handleCheckboxChange(index)}
-                />
-              </td>
-              <td>{item.id}</td>
-              <td>{item.title}</td>
-              <td>{item.category}</td>
-              <td>{item.date}</td>
-              <td>{item.amount}</td>
-              <td>
-                <ToggleButton />
-              </td>
-              <td>{item.settleDate}</td>
-              <td>메모내용메모내용메모내용메모내용메모내용메모내용</td>
-            </tr>
-          ))}
+          {data &&
+            data.tasks.map((item, index) => (
+              <tr key={index}>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={checkedItems[index]}
+                    onChange={() => handleCheckboxChange(index)}
+                  />
+                </td>
+                <td>{index + 1}</td>
+                <td className={styles.field}>{item.title}</td>
+                <td>{item.category === "homepage" ? "홈페이지" : "번역"}</td>
+                <td>
+                  {isNaN(new Date(item.workDate).getTime())
+                    ? "-"
+                    : new Date(item.workDate).toISOString().split("T")[0]}
+                </td>
+                <td>{item.amount.toLocaleString()}</td>
+                <td>{item.settled ? "Y" : "N"}</td>
+                <td>{item.settledDate || "-"}</td>
+                <td className={styles.field}>{item.memo}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
