@@ -104,7 +104,7 @@ const HongKongSearch = () => {
           </Horizontal>
 
           {/* "작업날짜" 행 */}
-          <Horizontal title="작업날짜">
+          <Horizontal title="전달날짜">
             <input type="date" {...register("workDate")} />
           </Horizontal>
 

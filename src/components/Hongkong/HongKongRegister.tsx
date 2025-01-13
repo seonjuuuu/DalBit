@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation";
 import Horizontal from "../common/table/Horizontal";
 import Table from "../common/table/Table";
 import styles from "./HongKongRegister.module.scss";
+import { useRegisterTask } from "@/api/taskMutation";
 
 type FormData = {
   workDate: string;
-  category: string;
+  category: "translation" | "homepage";
   title: string;
   amount: number;
   memo: string;
@@ -20,6 +21,7 @@ const HongKongRegister = () => {
     handleSubmit,
     reset,
     setValue,
+    watch,
     formState: { errors }
   } = useForm<FormData>({
     defaultValues: {
@@ -32,14 +34,35 @@ const HongKongRegister = () => {
   });
 
   const router = useRouter();
+  const { mutate, isPending, error } = useRegisterTask();
+  const category = watch("category");
+
+  if (category === "homepage") {
+    setValue("amount", 500000);
+  }
 
   const handleCancel = () => {
     router.push("/hongkong");
   };
 
   const onSubmit = (data: FormData) => {
-    console.log("등록된 데이터:", data);
-
+    mutate(
+      {
+        title: data.title,
+        memo: data.memo,
+        category: data.category,
+        amount: Number(data.amount),
+        workDate: data.workDate
+      },
+      {
+        onSuccess: (response) => {
+          console.log(response);
+        },
+        onError: (error) => {
+          alert("등록에 실패하였습니다.");
+        }
+      }
+    );
     reset();
     router.push("/hongkong");
   };
@@ -55,7 +78,7 @@ const HongKongRegister = () => {
       <h1 className={styles.title}>홍콩관광청 작업 등록</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Table>
-          <Horizontal title="작업날짜">
+          <Horizontal title="전달날짜">
             <input
               type="date"
               {...register("workDate", {
@@ -72,7 +95,7 @@ const HongKongRegister = () => {
           <Horizontal title="분류">
             <select {...register("category", { required: true })}>
               <option value="translation">번역</option>
-              <option value="website">홈페이지</option>
+              <option value="homepage">홈페이지</option>
             </select>
             {errors.category && (
               <p className={styles.error}>분류를 선택해주세요.</p>
