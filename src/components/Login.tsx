@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import styles from "./Login.module.scss";
 import { LoginParams, useLoginUser } from "@/api/userMutation";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const {
@@ -22,7 +23,8 @@ const Login = () => {
         password: data.password
       },
       {
-        onSuccess: () => {
+        onSuccess: (response) => {
+          Cookies.set("jwtToken", response.token, { expires: 7 });
           alert("로그인 성공");
           router.push("/");
         },

@@ -24,6 +24,7 @@ axiosClient.interceptors.response.use(
   },
   (error: AxiosError): Promise<AxiosError> => {
     if (error.response && error.response.status === 401) {
+      Cookies.remove("jwtToken");
       window.location.href = "/login";
     }
     return Promise.reject(error);
