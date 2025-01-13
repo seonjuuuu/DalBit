@@ -3,15 +3,27 @@
 }
 
 .nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  z-index: 10;
+}
+
+.navWrap {
   width: 100%;
   height: 100px;
   display: flex;
   align-items: center;
   padding: 20px;
-  background-color: #fff;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  z-index: 10;
+
   cursor: pointer;
+}
+
+.logout {
+  margin-right: 30px;
+  width: 100px;
 }
 
 .navList {
