@@ -11,29 +11,44 @@ export async function middleware(request: NextRequest) {
     console.error("환경 변수가 설정되지 않았습니다: NEXT_PUBLIC_BASE_URL");
     return NextResponse.next();
   }
-  if (pathname === "/login") {
-    if (token) {
-      try {
-        const response = await fetch(`${BASE_URL}/user/me`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          }
-        });
 
-        if (response.ok) {
-          return NextResponse.redirect(new URL("/", request.url));
+  let isTokenValid = false;
+
+  if (token) {
+    try {
+      const response = await fetch(`${BASE_URL}/user/me`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
         }
-      } catch (error) {
-        console.error("토큰 검증 실패:", error);
-      }
+      });
+
+      isTokenValid = response.ok;
+    } catch (error) {
+      console.error("토큰 검증 실패:", error);
     }
-    return NextResponse.next();
   }
 
-  if (!token) {
-    return NextResponse.redirect(new URL("/login", request.url));
+  if (pathname === "/login" || pathname === "register") {
+    if (isTokenValid) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    if (token && !isTokenValid) {
+      const response = NextResponse.next();
+      response.cookies.delete("jwtToken");
+      return response;
+    }
+
+    return NextResponse.next();
+  }
+  if (!token || !isTokenValid) {
+    const response = NextResponse.redirect(new URL("/login", request.url));
+    if (token) {
+      response.cookies.delete("jwtToken");
+    }
+    return response;
   }
 
   return NextResponse.next();
