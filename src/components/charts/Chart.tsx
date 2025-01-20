@@ -36,7 +36,7 @@ const Chart = () => {
 
   return (
     <BarChart
-      width={650}
+      width={450}
       height={400}
       data={
         chartData && chartData.length > 0

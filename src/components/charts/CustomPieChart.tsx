@@ -21,7 +21,7 @@ const CustomPieChart = () => {
   const chartData: PieData[] = Array.isArray(data?.data) ? data.data : [];
 
   return (
-    <PieChart width={650} height={400}>
+    <PieChart width={400} height={400}>
       <Tooltip
         formatter={(value, name) => [`${value.toLocaleString()}원`, name]}
       />
@@ -33,7 +33,7 @@ const CustomPieChart = () => {
         cx="50%"
         cy="50%"
         outerRadius={100}
-        label={({ name, value }) => `${name}: ${value.toLocaleString()}원`}
+        label={({ name, value }) => `${value.toLocaleString()}원`}
       >
         {chartData &&
           chartData.map((entry, index) => (

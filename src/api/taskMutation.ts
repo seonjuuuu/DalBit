@@ -10,6 +10,7 @@ export type TaskParams = {
   amount: number;
   settled: boolean;
   settledDate: string | null;
+  client: string;
 };
 
 export type Task = {
@@ -21,6 +22,7 @@ export type Task = {
   settled: boolean;
   memo?: string;
   settledDate: string | null;
+  client: string;
 };
 
 export type TaskResponse = {
@@ -127,6 +129,20 @@ export const useTaskSixMonth = () => {
   return useQuery<TaskDefaultResponse, Error>({
     queryKey: ["taskSixMonth"],
     queryFn: async () => await taskSixMonth(),
+    enabled: true
+  });
+};
+
+export const taskCurrentList = async (): Promise<TaskDefaultResponse> => {
+  const response =
+    await axiosClient.get<TaskDefaultResponse>("/task/recentList");
+  return response.data;
+};
+
+export const useTaskCurrentList = () => {
+  return useQuery<TaskDefaultResponse, Error>({
+    queryKey: ["taskCurrentList"],
+    queryFn: async () => await taskCurrentList(),
     enabled: true
   });
 };

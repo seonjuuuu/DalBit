@@ -93,7 +93,8 @@ const HongKongRegister = ({ initialValues }: Props) => {
       amount: Number(data.amount),
       workDate: data.workDate,
       settled: data.settled,
-      settledDate: data.settledDate || null
+      settledDate: data.settledDate || null,
+      client: "hongkong"
     };
     //수정
     if (initialValues && initialValues._id) {

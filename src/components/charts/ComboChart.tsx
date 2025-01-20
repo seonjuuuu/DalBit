@@ -38,7 +38,7 @@ const ComboChart = () => {
   const chartData = Array.isArray(data?.data) ? data.data : [];
   return (
     <ComposedChart
-      width={650}
+      width={850}
       height={400}
       data={chartData}
       margin={{ top: 20, right: 30, left: 50, bottom: 20 }}
