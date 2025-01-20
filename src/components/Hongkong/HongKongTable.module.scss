@@ -9,6 +9,7 @@
   border: 1px solid #d6d6d6;
   border-radius: 10px;
   padding: 10px;
+  background-color: #f6f6f5;
 }
 
 .total {
@@ -39,4 +40,13 @@
 
   justify-content: flex-end;
   gap: 10px;
+}
+
+.secondWrap {
+  input {
+    border: 1px solid #cfcfcf;
+    padding: 10px 20px;
+    border-radius: 4px;
+    width: 180px;
+  }
 }

@@ -1,7 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import styles from "./HongKongTable.module.scss";
-import { useDeleteTask, useTaskListWithFilter } from "@/api/taskMutation";
+import {
+  useDeleteTask,
+  useTaskListWithFilter,
+  useTaskSettledUpdate
+} from "@/api/taskMutation";
 import { useRouter } from "next/navigation";
 import { Filter } from "@/app/hongkong/page";
 
@@ -15,8 +19,7 @@ const HongKongTable = ({ filter }: Props) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [checkedItems, setCheckedItems] = useState<boolean[]>([]);
   const [checkedItemsId, setCheckedItemsId] = useState<string[]>([]);
-
-  console.log(filter);
+  const [settledDate, setSettledDate] = useState<string | null>(null);
 
   const { data, isPending, refetch } = useTaskListWithFilter(filter);
 
@@ -70,10 +73,33 @@ const HongKongTable = ({ filter }: Props) => {
   }, [router]);
 
   const { mutate, isError, isSuccess } = useDeleteTask();
+  const { mutate: updateSettled } = useTaskSettledUpdate();
 
   const handleDelete = (id: string) => {
     if (!confirm("삭제하시겠습니까?")) return;
     mutate({ id });
+  };
+
+  const handleSettled = () => {
+    if (!settledDate) {
+      alert("정산 날짜를 선택해주세요.");
+      return;
+    }
+
+    if (checkedItemsId.length === 0) {
+      alert("선택된 작업이 없습니다.");
+      return;
+    }
+
+    const params = {
+      settledDate: new Date(settledDate).toISOString(),
+      ids: checkedItemsId
+    };
+    updateSettled(params);
+  };
+
+  const handleDate = (event: ChangeEvent<HTMLInputElement>) => {
+    setSettledDate(event.target.value);
   };
 
   return (
@@ -91,8 +117,11 @@ const HongKongTable = ({ filter }: Props) => {
           </div>
         </div>
       </div>
-      <div className={`${styles.buttonWrap} ${styles.right}`}>
-        <button>일괄 정산</button>
+      <div className={`${styles.secondWrap} ${styles.right}`}>
+        <input type="date" onChange={handleDate} />
+        <button type="button" onClick={handleSettled}>
+          정산 완료
+        </button>
       </div>
       <table className="tableList">
         <thead>

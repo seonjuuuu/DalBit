@@ -46,6 +46,11 @@ export type TaskRegisterResponse = {
   message: string;
 };
 
+export type TaskSettledUpdateParams = {
+  ids: string[];
+  settledDate: string;
+};
+
 export const registerTask = async (
   params: TaskParams
 ): Promise<TaskRegisterResponse> => {
@@ -154,6 +159,27 @@ export const useDeleteTask = () => {
     mutationFn: ({ id }) => taskDelete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["taskListWithFilter"] });
+    }
+  });
+};
+
+export const taskSettledUpdate = async (params: TaskSettledUpdateParams) => {
+  const response = await axiosClient.post<TaskRegisterResponse>(
+    "/task/settled",
+    params
+  );
+  return response.data;
+};
+
+export const useTaskSettledUpdate = () => {
+  return useMutation<TaskRegisterResponse, Error, TaskSettledUpdateParams>({
+    mutationFn: taskSettledUpdate,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["taskListWithFilter"] });
+      alert("정산이 완료되었습니다.");
+    },
+    onError: () => {
+      alert("정산에 실패했습니다. 다시 시도해주세요.");
     }
   });
 };
