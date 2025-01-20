@@ -34,7 +34,7 @@ const Register = () => {
       },
       {
         onSuccess: () => {
-          alert("회원가입이 완료되었습니다.");
+          alert("회원가입 승인이 완료되었습니다.");
           router.push("/login");
         },
         onError: (error) => {

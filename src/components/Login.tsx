@@ -44,6 +44,8 @@ const Login = () => {
             alert("아이디 또는 비밀번호가 일치하지 않습니다.");
           } else if (error.response && error.response.status === 404) {
             alert("가입된 유저가 아닙니다.");
+          } else if (error.response && error.response.status === 403) {
+            alert("관리자의 승인을 기다려 주세요.");
           } else alert("로그인 실패하였습니다. 다시 시도해주세요");
         }
       }
