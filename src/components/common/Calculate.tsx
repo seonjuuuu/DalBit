@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import styles from "./Calculate.module.scss";
 type CalculateProps = {
   onTotalCostChange: (total: number) => void;
+  onMemoChange: (memo: string) => void;
 };
 
-const Calculate = ({ onTotalCostChange }: CalculateProps) => {
+const Calculate = ({ onTotalCostChange, onMemoChange }: CalculateProps) => {
   const [inputData, setInputData] = useState<string>("");
   const [parsedData, setParsedData] = useState<string[]>([]);
   const [totalCost, setTotalCost] = useState<number>(0);
@@ -15,6 +16,7 @@ const Calculate = ({ onTotalCostChange }: CalculateProps) => {
     const parsed = rows.flatMap((row) => row.split("\t"));
 
     setParsedData(parsed);
+    onMemoChange(inputData);
   };
 
   const calculateCost = (count: string): number => {

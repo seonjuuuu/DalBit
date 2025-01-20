@@ -197,6 +197,9 @@ const HongKongRegister = ({ initialValues }: Props) => {
                 onTotalCostChange={(total) => {
                   setValue("amount", total);
                 }}
+                onMemoChange={(memo) => {
+                  setValue("memo", memo);
+                }}
               />
             </Horizontal>
           )}
