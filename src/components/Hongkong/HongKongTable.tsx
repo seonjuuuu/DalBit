@@ -13,9 +13,8 @@ type Props = {
 
 const HongKongTable = ({ filter }: Props) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
-  const [checkedItems, setCheckedItems] = useState<boolean[]>(
-    new Array(2).fill(false)
-  );
+  const [checkedItems, setCheckedItems] = useState<boolean[]>([]);
+  const [checkedItemsId, setCheckedItemsId] = useState<string[]>([]);
 
   console.log(filter);
 
@@ -25,10 +24,25 @@ const HongKongTable = ({ filter }: Props) => {
     const newCheckedState = !isChecked;
     setIsChecked(newCheckedState);
     data && setCheckedItems(new Array(data.tasks.length).fill(newCheckedState));
+
+    const allCheckedIds = newCheckedState
+      ? data && data.tasks.map((task) => task._id)
+      : [];
+    setCheckedItemsId(allCheckedIds || []);
   };
 
-  const handleCheckboxChange = (index: number) => {
+  const handleCheckboxChange = (index: number, id: string) => {
+    const newCheckedIds = [...checkedItemsId];
+    if (newCheckedIds.includes(id)) {
+      newCheckedIds.splice(newCheckedIds.indexOf(id), 1);
+    } else {
+      newCheckedIds.push(id);
+    }
+    setCheckedItemsId(newCheckedIds);
+
     const newCheckedItems = [...checkedItems];
+    if (newCheckedItems[index] !== undefined) {
+    }
     newCheckedItems[index] = !newCheckedItems[index];
     setCheckedItems(newCheckedItems);
 
@@ -38,6 +52,10 @@ const HongKongTable = ({ filter }: Props) => {
       setIsChecked(false);
     }
   };
+
+  useEffect(() => {
+    console.log(checkedItemsId);
+  }, [checkedItemsId]);
 
   const router = useRouter();
   useEffect(() => {
@@ -104,7 +122,7 @@ const HongKongTable = ({ filter }: Props) => {
                   <input
                     type="checkbox"
                     checked={checkedItems[index]}
-                    onChange={() => handleCheckboxChange(index)}
+                    onChange={() => handleCheckboxChange(index, item._id)}
                   />
                 </td>
                 <td>{index + 1}</td>
