@@ -43,7 +43,7 @@ const Calculate = () => {
           rows={10}
           className={styles.textarea}
         />
-        <button className={styles.btn} onClick={handleParse}>
+        <button type="button" className={styles.btn} onClick={handleParse}>
           계산하기
         </button>
         <p className={styles.totalCount}>
