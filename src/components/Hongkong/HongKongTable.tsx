@@ -104,7 +104,14 @@ const HongKongTable = ({ filter }: Props) => {
       settledDate: new Date(settledDate).toISOString(),
       ids: checkedItemsId
     };
-    updateSettled(params);
+    updateSettled(params, {
+      onSuccess: () => {
+        setIsChecked(false);
+        setCheckedItems([]);
+        setCheckedItemsId([]);
+        refetch();
+      }
+    });
   };
 
   const handleDate = (event: ChangeEvent<HTMLInputElement>) => {

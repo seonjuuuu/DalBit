@@ -43,15 +43,16 @@ const Chart = () => {
           ? chartData
           : [{ month: "", totalAmount: 0 }]
       }
+      margin={{ top: 20, right: 30, left: 50, bottom: 20 }}
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="month" tickFormatter={(month) => `${month}월`} />
       <YAxis tickFormatter={(value) => `${value.toLocaleString()}`} />
       <Tooltip
-        formatter={(value) => `${value.toLocaleString()}원`}
+        formatter={(value) => [`${value.toLocaleString()}원`, "작업금액"]}
         labelFormatter={(label) => `${label}월`}
       />
-      <Legend />
+      <Legend formatter={() => "홍콩 관광청 작업금액"} />
       <Bar dataKey="totalAmount">
         {chartData.map((_, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

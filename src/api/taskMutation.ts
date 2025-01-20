@@ -131,6 +131,34 @@ export const useTaskSixMonth = () => {
   });
 };
 
+export const taskSettledTotal = async (): Promise<TaskDefaultResponse> => {
+  const response =
+    await axiosClient.get<TaskDefaultResponse>("/task/settledTotal");
+  return response.data;
+};
+
+export const useTaskSettledTotal = () => {
+  return useQuery<TaskDefaultResponse, Error>({
+    queryKey: ["taskSettledTotal"],
+    queryFn: async () => await taskSettledTotal(),
+    enabled: true
+  });
+};
+
+export const taskSettledSixYear = async (): Promise<TaskDefaultResponse> => {
+  const response =
+    await axiosClient.get<TaskDefaultResponse>("/task/settledYear");
+  return response.data;
+};
+
+export const useTaskSettledSixMonth = () => {
+  return useQuery<TaskDefaultResponse, Error>({
+    queryKey: ["taskSettledYear"],
+    queryFn: async () => await taskSettledSixYear(),
+    enabled: true
+  });
+};
+
 export const getDetail = async (id: string): Promise<TaskDetailResponse> => {
   const response = await axiosClient.get<TaskDetailResponse>(`/task/${id}`);
   return response.data;
