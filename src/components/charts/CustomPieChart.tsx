@@ -39,7 +39,7 @@ const CustomPieChart = () => {
         nameKey="name"
         cx="50%"
         cy="50%"
-        outerRadius={100}
+        outerRadius={90}
         label={({ name, value }) => `${value.toLocaleString()}원`}
       >
         {chartData &&
