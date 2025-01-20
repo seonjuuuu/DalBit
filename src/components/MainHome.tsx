@@ -8,10 +8,10 @@ import Chart from "./charts/Chart";
 import ComboChart from "./charts/ComboChart";
 import StackedBarChart from "./charts/CustomPieChart";
 import styles from "./MainHome.module.scss";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const MainHome = () => {
-  const { data } = useTaskCurrentList();
+  const { data, refetch: taskRefetch } = useTaskCurrentList();
 
   const { data: settledData, isPending, refetch } = useTaskSettledSixMonth();
 
@@ -22,9 +22,16 @@ const MainHome = () => {
     return acc;
   }, {});
 
+  const stableRefetch = useRef(refetch);
+  const stableTaskRefetch = useRef(taskRefetch);
+
   useEffect(() => {
-    refetch();
-  }, [refetch]);
+    stableRefetch.current();
+  }, []);
+
+  useEffect(() => {
+    stableTaskRefetch.current();
+  }, []);
 
   return (
     <>
