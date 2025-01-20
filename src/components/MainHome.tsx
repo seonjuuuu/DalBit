@@ -31,7 +31,7 @@ const MainHome = () => {
                         <span className={styles.currentTag}>
                           {item.client === "hongkong" ? "홍콩관광청" : ""}
                         </span>
-                        <span>{item.title}</span>
+                        <span className={styles.currentText}>{item.title}</span>
                       </div>
                       <span>
                         {new Date(item.workDate).toISOString().split("T")[0]}

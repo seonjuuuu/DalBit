@@ -49,6 +49,7 @@
   .currentListItem {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     text-align: left;
     border-bottom: 1px solid #d6d6d6;
     padding: 10px 0;
@@ -69,4 +70,11 @@
   font-size: 12px;
   border-radius: 12px;
   background-color: #f5e3b0;
+}
+
+.currentText {
+  max-width: 310px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
