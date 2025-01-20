@@ -12,6 +12,8 @@ export type Filter = {
   settledStart?: string;
   settledEnd?: string;
   settlement?: "total" | "settled" | "pending";
+  page?: number;
+  limit?: number;
 };
 
 const HongKong = () => {

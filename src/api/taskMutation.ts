@@ -74,6 +74,8 @@ export const taskListWithFilter = async (filters: {
   settled?: boolean;
   settledStart?: string;
   settledEnd?: string;
+  page?: number;
+  limit?: number;
 }): Promise<TaskResponse> => {
   const params = new URLSearchParams();
 
@@ -85,6 +87,8 @@ export const taskListWithFilter = async (filters: {
   if (typeof filters.settled === "boolean") {
     params.append("settled", filters.settled.toString());
   }
+  if (filters.page) params.append("page", filters.page.toString());
+  if (filters.limit) params.append("limit", filters.limit.toString());
 
   const response = await axiosClient.get<TaskResponse>(
     `/task?${params.toString()}`

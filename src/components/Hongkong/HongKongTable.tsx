@@ -8,6 +8,7 @@ import {
 } from "@/api/taskMutation";
 import { useRouter } from "next/navigation";
 import { Filter } from "@/app/hongkong/page";
+import Pagination from "react-js-pagination";
 
 type Props = {
   filter: Omit<Filter, "category"> & {
@@ -20,8 +21,16 @@ const HongKongTable = ({ filter }: Props) => {
   const [checkedItems, setCheckedItems] = useState<boolean[]>([]);
   const [checkedItemsId, setCheckedItemsId] = useState<string[]>([]);
   const [settledDate, setSettledDate] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 30;
 
-  const { data, isPending, refetch } = useTaskListWithFilter(filter);
+  const newFilter = {
+    ...filter,
+    page: currentPage,
+    limit: itemsPerPage
+  };
+
+  const { data, isPending, refetch } = useTaskListWithFilter(newFilter);
 
   const handleSelectAll = () => {
     const newCheckedState = !isChecked;
@@ -102,6 +111,11 @@ const HongKongTable = ({ filter }: Props) => {
     setSettledDate(event.target.value);
   };
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    refetch();
+  };
+
   return (
     <div className={styles.mainTable}>
       <div className={styles.cost}>
@@ -161,7 +175,7 @@ const HongKongTable = ({ filter }: Props) => {
                     onChange={() => handleCheckboxChange(index, item._id)}
                   />
                 </td>
-                <td>{index + 1}</td>
+                <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
                 <td
                   className={styles.title}
                   onClick={(event) => {
@@ -201,6 +215,13 @@ const HongKongTable = ({ filter }: Props) => {
           )}
         </tbody>
       </table>
+      <Pagination
+        activePage={currentPage}
+        itemsCountPerPage={itemsPerPage}
+        totalItemsCount={data?.totalTask || 0}
+        pageRangeDisplayed={5}
+        onChange={handlePageChange}
+      />
     </div>
   );
 };
