@@ -41,6 +41,11 @@ export type TaskDetailResponse = {
   task: Task;
 };
 
+export type TaskDefaultResponse = {
+  status: "success" | "error";
+  data: string;
+};
+
 export type TaskRegisterResponse = {
   status: "success" | "error";
   message: string;
@@ -110,6 +115,19 @@ export const useTaskListWithFilter = (filters: {
     enabled: true,
     refetchOnWindowFocus: true,
     refetchOnReconnect: true
+  });
+};
+
+export const taskSixMonth = async (): Promise<TaskDefaultResponse> => {
+  const response = await axiosClient.get<TaskDefaultResponse>("/task/recent");
+  return response.data;
+};
+
+export const useTaskSixMonth = () => {
+  return useQuery<TaskDefaultResponse, Error>({
+    queryKey: ["taskSixMonth"],
+    queryFn: async () => await taskSixMonth(),
+    enabled: true
   });
 };
 
