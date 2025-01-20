@@ -7,7 +7,7 @@ type DetailProps = {
 };
 
 const Detail = async ({ params }: DetailProps) => {
-  const { id } = await params;
+  const { id } = params;
   return (
     <div>
       <HongKongModify id={id[0]} />
