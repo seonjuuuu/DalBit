@@ -1,3 +1,4 @@
+"use client";
 import dynamic from "next/dynamic";
 import { useTaskSixMonth } from "@/api/taskMutation";
 import {
@@ -9,6 +10,7 @@ import {
   Legend,
   Cell
 } from "recharts";
+import { useEffect } from "react";
 
 type ChartData = {
   month: string;
@@ -33,6 +35,10 @@ const COLORS = [
 const Chart = () => {
   const { data, isPending, refetch } = useTaskSixMonth();
   const chartData: ChartData[] = Array.isArray(data?.data) ? data.data : [];
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   return (
     <BarChart

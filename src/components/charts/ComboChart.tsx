@@ -1,3 +1,4 @@
+"use client";
 import { useTaskSettledSixMonth } from "@/api/taskMutation";
 import dynamic from "next/dynamic";
 import styles from "./ComboChart.module.scss";
@@ -11,6 +12,7 @@ import {
   Tooltip,
   Legend
 } from "recharts";
+import { useEffect } from "react";
 
 const ComposedChart = dynamic(
   () => import("recharts").then((recharts) => recharts.ComposedChart),
@@ -36,6 +38,9 @@ const months = [
 
 const ComboChart = () => {
   const { data, isPending, refetch } = useTaskSettledSixMonth();
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
   const chartData = Array.isArray(data?.data) ? data.data : [];
   return (
     <>

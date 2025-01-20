@@ -1,5 +1,7 @@
+"use client";
 import { useTaskSettledTotal } from "@/api/taskMutation";
 import dynamic from "next/dynamic";
+import { useEffect } from "react";
 import { Pie, Cell, Tooltip, Legend } from "recharts";
 
 const PieChart = dynamic(
@@ -18,6 +20,11 @@ type PieData = {
 
 const CustomPieChart = () => {
   const { data, isPending, refetch } = useTaskSettledTotal();
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
   const chartData: PieData[] = Array.isArray(data?.data) ? data.data : [];
 
   return (
