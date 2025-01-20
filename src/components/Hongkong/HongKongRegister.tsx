@@ -9,6 +9,7 @@ import { useRegisterTask, useTaskUpdate } from "@/api/taskMutation";
 import ToggleButton from "../common/ToggleButton";
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import Calculate from "../common/Calculate";
 
 type FormData = {
   workDate: string;
@@ -187,6 +188,11 @@ const HongKongRegister = ({ initialValues }: Props) => {
               <p className={styles.error}>{errors.title.message}</p>
             )}
           </Horizontal>
+          {category === "translation" && (
+            <Horizontal title="번역 계산기">
+              <Calculate />
+            </Horizontal>
+          )}
           <Horizontal title="금액">
             <input
               type="number"
@@ -194,6 +200,7 @@ const HongKongRegister = ({ initialValues }: Props) => {
                 required: "금액을 입력해주세요.",
                 min: { value: 1, message: "금액은 1 이상이어야 합니다." }
               })}
+              disabled={category === "homepage"}
             />
             {errors.amount && (
               <p className={styles.error}>{errors.amount.message}</p>

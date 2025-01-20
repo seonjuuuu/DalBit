@@ -1,0 +1,76 @@
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.textarea {
+  width: 400px;
+  height: 500px;
+  margin-bottom: 10px;
+  padding: 20px;
+  border: 1px solid #c1c1c1;
+  border-radius: 5px;
+}
+
+.btn {
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.result {
+  width: 400px;
+  height: 40px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.resultData {
+  padding-bottom: 30px;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.tableList {
+  border-bottom: 1px solid #ddd;
+}
+
+.tableRight {
+  text-align: right;
+  padding: 8px;
+}
+
+.tableLeft {
+  text-align: left;
+  padding: 8px;
+}
+
+.totalCount {
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    width: 100%;
+    display: block;
+  }
+  .textarea {
+    width: 100%;
+  }
+  .result {
+    width: 100%;
+  }
+}
