@@ -61,6 +61,8 @@ const HongKongRegister = ({ initialValues }: Props) => {
     defaultValue: false
   });
 
+  const [total, setTotal] = useState<number>(0);
+
   useEffect(() => {
     if (initialValues) {
       reset({
@@ -191,7 +193,11 @@ const HongKongRegister = ({ initialValues }: Props) => {
           </Horizontal>
           {category === "translation" && (
             <Horizontal title="번역 계산기">
-              <Calculate />
+              <Calculate
+                onTotalCostChange={(total) => {
+                  setValue("amount", total);
+                }}
+              />
             </Horizontal>
           )}
           <Horizontal title="금액">

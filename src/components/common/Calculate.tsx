@@ -1,8 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import styles from "./Calculate.module.scss";
+type CalculateProps = {
+  onTotalCostChange: (total: number) => void;
+};
 
-const Calculate = () => {
+const Calculate = ({ onTotalCostChange }: CalculateProps) => {
   const [inputData, setInputData] = useState<string>("");
   const [parsedData, setParsedData] = useState<string[]>([]);
   const [totalCost, setTotalCost] = useState<number>(0);
@@ -31,6 +34,7 @@ const Calculate = () => {
       return acc + (isNaN(cost) ? 0 : cost);
     }, 0);
     setTotalCost(total);
+    onTotalCostChange(total);
   }, [parsedData]);
 
   return (
