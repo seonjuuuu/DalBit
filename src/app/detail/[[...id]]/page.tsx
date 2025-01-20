@@ -1,13 +1,16 @@
 import HongKongModify from "@/components/Hongkong/HongKongModify";
-
 type DetailProps = {
-  params: {
-    id: string | string[];
-  };
+  params: Promise<{
+    id?: string | string[];
+  }>;
 };
 
 const Detail = async ({ params }: DetailProps) => {
-  const id = Array.isArray(params.id) ? params.id[0] : params.id;
+  const resolvedParams = await params;
+
+  const id = Array.isArray(resolvedParams.id)
+    ? resolvedParams.id[0]
+    : resolvedParams.id || "default-id";
 
   return (
     <div>
