@@ -1,5 +1,6 @@
 import { useTaskSettledSixMonth } from "@/api/taskMutation";
 import dynamic from "next/dynamic";
+import styles from "./ComboChart.module.scss";
 
 import {
   Bar,
@@ -37,25 +38,38 @@ const ComboChart = () => {
   const { data, isPending, refetch } = useTaskSettledSixMonth();
   const chartData = Array.isArray(data?.data) ? data.data : [];
   return (
-    <ComposedChart
-      width={850}
-      height={400}
-      data={chartData}
-      margin={{ top: 20, right: 30, left: 50, bottom: 20 }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="year" />
-      <YAxis tickFormatter={(value) => `${value.toLocaleString()}원`} />
-      <Tooltip formatter={(value) => `${value.toLocaleString()}원`} />
-      <Legend />
-      {months.map(
-        (month) =>
-          chartData.some((data) => data[month.key]) && (
-            <Bar key={month.key} dataKey={month.key} fill={month.color} />
-          )
+    <>
+      {chartData.length === 0 ? (
+        <div className={styles.noData}>
+          <p>아직 데이터가 없습니다 :) 정산 바라는중 !!</p>
+        </div>
+      ) : (
+        <ComposedChart
+          width={850}
+          height={400}
+          data={chartData}
+          margin={{ top: 20, right: 30, left: 50, bottom: 20 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="year" />
+          <YAxis tickFormatter={(value) => `${value.toLocaleString()}원`} />
+          <Tooltip formatter={(value) => `${value.toLocaleString()}원`} />
+          <Legend />
+          {months.map(
+            (month) =>
+              chartData.some((data) => data[month.key]) && (
+                <Bar key={month.key} dataKey={month.key} fill={month.color} />
+              )
+          )}
+          <Line
+            type="monotone"
+            dataKey="total"
+            stroke="#000"
+            name="총 정산 금액"
+          />
+        </ComposedChart>
       )}
-      <Line type="monotone" dataKey="total" stroke="#000" name="총 정산 금액" />
-    </ComposedChart>
+    </>
   );
 };
 
