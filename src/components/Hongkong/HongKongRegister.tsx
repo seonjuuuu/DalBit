@@ -108,7 +108,6 @@ const HongKongRegister = ({ initialValues }: Props) => {
                 queryKey: ["getDetail", initialValues._id]
               })
               .then(() => {
-                console.log("taskData", taskData);
                 reset(taskData);
                 alert("수정에 성공하였습니다.");
                 router.push("/hongkong");
