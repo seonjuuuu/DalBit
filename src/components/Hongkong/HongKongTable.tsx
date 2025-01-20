@@ -32,6 +32,11 @@ const HongKongTable = ({ filter }: Props) => {
   };
 
   const handleCheckboxChange = (index: number, id: string) => {
+    toggleCheckId(id);
+    toggleItem(index);
+  };
+
+  const toggleCheckId = (id: string) => {
     const newCheckedIds = [...checkedItemsId];
     if (newCheckedIds.includes(id)) {
       newCheckedIds.splice(newCheckedIds.indexOf(id), 1);
@@ -39,10 +44,10 @@ const HongKongTable = ({ filter }: Props) => {
       newCheckedIds.push(id);
     }
     setCheckedItemsId(newCheckedIds);
+  };
 
+  const toggleItem = (index: number) => {
     const newCheckedItems = [...checkedItems];
-    if (newCheckedItems[index] !== undefined) {
-    }
     newCheckedItems[index] = !newCheckedItems[index];
     setCheckedItems(newCheckedItems);
 
@@ -54,8 +59,10 @@ const HongKongTable = ({ filter }: Props) => {
   };
 
   useEffect(() => {
-    console.log(checkedItemsId);
-  }, [checkedItemsId]);
+    if (data) {
+      setCheckedItems(new Array(data.tasks.length).fill(false));
+    }
+  }, [data]);
 
   const router = useRouter();
   useEffect(() => {
@@ -121,7 +128,7 @@ const HongKongTable = ({ filter }: Props) => {
                 <td>
                   <input
                     type="checkbox"
-                    checked={checkedItems[index]}
+                    checked={checkedItems[index] || false}
                     onChange={() => handleCheckboxChange(index, item._id)}
                   />
                 </td>
