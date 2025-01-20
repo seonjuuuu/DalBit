@@ -6,6 +6,16 @@ import { LoginParams, useLoginUser } from "@/api/userMutation";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
+type ApiError = {
+  response?: {
+    status: number;
+    data?: {
+      message?: string;
+    };
+  };
+  message: string;
+};
+
 const Login = () => {
   const {
     register,
@@ -28,9 +38,13 @@ const Login = () => {
           alert("로그인 성공");
           router.push("/");
         },
-        onError: (error) => {
+        onError: (error: ApiError) => {
           console.error("로그인실패", error);
-          alert("로그인 실패하였습니다. 다시 시도해주세요");
+          if (error.response && error.response.status === 401) {
+            alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+          } else if (error.response && error.response.status === 404) {
+            alert("가입된 유저가 아닙니다.");
+          } else alert("로그인 실패하였습니다. 다시 시도해주세요");
         }
       }
     );

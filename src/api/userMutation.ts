@@ -37,7 +37,6 @@ export const loginUser = async (
   params: LoginParams
 ): Promise<LoginResponse> => {
   const response = await axiosClient.post<LoginResponse>("/auth/login", params);
-  console.log("login_res____", response);
   return response.data;
 };
 
