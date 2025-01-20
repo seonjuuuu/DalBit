@@ -1,5 +1,8 @@
 "use client";
-import { useTaskSettledSixMonth } from "@/api/taskMutation";
+import {
+  TaskDefaultResponse,
+  useTaskSettledSixMonth
+} from "@/api/taskMutation";
 import dynamic from "next/dynamic";
 import styles from "./ComboChart.module.scss";
 
@@ -36,11 +39,11 @@ const months = [
   { key: "12월", color: "#ba68c8" }
 ];
 
-const ComboChart = () => {
-  const { data, isPending, refetch } = useTaskSettledSixMonth();
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
+type ComboChartProps = {
+  data: TaskDefaultResponse;
+};
+
+const ComboChart = ({ data }: ComboChartProps) => {
   const chartData = Array.isArray(data?.data) ? data.data : [];
   return (
     <>

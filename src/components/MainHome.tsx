@@ -1,12 +1,30 @@
 "use client";
-import { useTaskCurrentList, useTaskListWithFilter } from "@/api/taskMutation";
+import {
+  useTaskCurrentList,
+  useTaskListWithFilter,
+  useTaskSettledSixMonth
+} from "@/api/taskMutation";
 import Chart from "./charts/Chart";
 import ComboChart from "./charts/ComboChart";
 import StackedBarChart from "./charts/CustomPieChart";
 import styles from "./MainHome.module.scss";
+import { useEffect } from "react";
 
 const MainHome = () => {
-  const { data, isPending, refetch } = useTaskCurrentList();
+  const { data } = useTaskCurrentList();
+
+  const { data: settledData, isPending, refetch } = useTaskSettledSixMonth();
+
+  const chartData = Array.isArray(settledData?.data) ? settledData.data : [];
+
+  const transData = chartData.reduce<Record<string, number>>((acc, cur) => {
+    acc[cur.year] = cur.total;
+    return acc;
+  }, {});
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   return (
     <>
@@ -45,7 +63,19 @@ const MainHome = () => {
       </div>
       <div className={styles.containerMid}>
         <div className={styles.text}>년도별 정산금액</div>
-        <ComboChart />
+        <div className={styles.totalItem}>
+          <div className={styles.graph}>
+            {settledData && <ComboChart data={settledData} />}
+          </div>
+          <div className={styles.box}>
+            {Object.entries(transData).map(([year, total]) => (
+              <div key={year} className={styles.totalBox}>
+                <span className={styles.year}>{year}</span>
+                <span className={styles.price}>{total.toLocaleString()}원</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );
