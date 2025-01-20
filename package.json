@@ -31,8 +31,9 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/recharts": "^1.8.29",
-    "eslint": "^9.18.0",
+    "eslint": "^8.50.0",
     "eslint-config-next": "^15.1.4",
+    "eslint-config-react-app": "^7.0.1",
     "typescript": "^5"
   }
 }
