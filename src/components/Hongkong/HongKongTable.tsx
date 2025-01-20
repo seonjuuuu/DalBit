@@ -66,6 +66,9 @@ const HongKongTable = ({ filter }: Props) => {
           </div>
         </div>
       </div>
+      <div className={`${styles.buttonWrap} ${styles.right}`}>
+        <button>일괄 정산</button>
+      </div>
       <table className="tableList">
         <thead>
           <tr>
